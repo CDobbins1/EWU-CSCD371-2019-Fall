@@ -10,36 +10,46 @@ namespace Logger.Tests
         [TestMethod]
         public void Log_FileCreated_IsTrue()
         {
-            //Arrange
             string filePath = "TestFile.txt";
-            string className = "TestClass";
-            FileLogger fileLogger = new FileLogger(filePath) { ClassName = className };
+            try
+            {
+                //Arrange
+                string className = "TestClass";
+                FileLogger fileLogger = new FileLogger(filePath) { ClassName = className };
 
-            //Act
-            fileLogger.Error("Test Message");
+                //Act
+                fileLogger.Error("Test Message");
 
-            //Assert
-            Assert.IsTrue(File.Exists(filePath));
-
-            File.Delete(filePath);
+                //Assert
+                Assert.IsTrue(File.Exists(filePath));
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
         }
         
         [TestMethod]
         public void Log_FileFormatIsCorrect_IsTrue()
         {
-            //Arrange
             string filePath = "TestFile.txt";
-            string className = "TestClass";
-            string testLog = $"{DateTime.Now} TestClass Error: Test Message{Environment.NewLine}";
-            FileLogger fileLogger = new FileLogger(filePath) { ClassName = className };
+            try
+            {
+                //Arrange
+                string className = "TestClass";
+                string testLog = $"{DateTime.Now} TestClass Error: Test Message{Environment.NewLine}";
+                FileLogger fileLogger = new FileLogger(filePath) { ClassName = className };
 
-            //Act
-            fileLogger.Error("Test Message");
+                //Act
+                fileLogger.Error("Test Message");
 
-            //Assert
-            Assert.AreEqual(testLog, File.ReadAllText(filePath));
-
-            File.Delete(filePath);
+                //Assert
+                Assert.AreEqual(testLog, File.ReadAllText(filePath));
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
         }
     }
 }

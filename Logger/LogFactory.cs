@@ -2,15 +2,15 @@
 {
     public class LogFactory
     {
-        private string filePath;
+        private string _FilePath;
         public BaseLogger CreateLogger(string className)
         {
-            if (filePath is null) return null;
+            if (_FilePath is null) return null;
 
-            var logger = new FileLogger(filePath) { ClassName = className ?? "CLASSNAME NOT GIVEN" };
+            var logger = new FileLogger(_FilePath) { ClassName = className ?? "CLASSNAME NOT GIVEN" };
             return logger;
         }
 
-        public void ConfigureFileLogger(string filePath) => this.filePath = filePath;
+        public void ConfigureFileLogger(string filePath) => this._FilePath = filePath;
     }
 }
